@@ -1754,7 +1754,6 @@ class JinaBertModel(BertModel):
         # GeGLU activation
         assert self.hparams["feed_forward_type"] == "geglu"
 
-
     def get_tensors(self):
         assert self.vocab_size is not None
         for name, data in super().get_tensors():
