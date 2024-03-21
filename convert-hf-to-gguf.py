@@ -1742,6 +1742,28 @@ class BertModel(Model):
 
             self.gguf_writer.add_tensor(new_name, data)
 
+@Model.register("JinaBertModel")
+class JinaBertModel(BertModel):
+    model_arch = gguf.MODEL_ARCH.JINA_BERT
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        assert self.hparams["position_embedding_type"] == "alibi"
+
+        # GeGLU activation
+        assert self.hparams["feed_forward_type"] == "geglu"
+
+
+    def get_tensors(self):
+        assert self.vocab_size is not None
+        for name, data in super().get_tensors():
+            # Nomic Embed's token embeddings tensor is padded, but llama.cpp wants tensor sizes to match exactly.
+            if name == 'embeddings.word_embeddings.weight' and data.shape[1] != self.vocab_size:
+                rounded_vocab_size = (self.vocab_size + 63) // 64 * 64
+                assert data.shape == (rounded_vocab_size, self.hparams["hidden_size"])
+                data = data[:self.vocab_size, :]
+            yield name, data
 
 @Model.register("NomicBertModel")
 class NomicBertModel(BertModel):
