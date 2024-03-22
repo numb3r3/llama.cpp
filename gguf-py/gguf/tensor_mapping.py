@@ -207,9 +207,6 @@ class TensorNameMap:
             "model.layers.{bid}.mlp.up_proj",                         # llama-hf refact
             "layers.{bid}.feed_forward.w3",                           # llama-pth
             "encoder.layer.{bid}.intermediate.dense",                 # bert
-            "encoder.layer.{bid}.mlp.gated_layers",                   # jina-bert
-            "encoder.layer.{bid}.mlp.layernorm",                      # jina-bert
-            "encoder.layer.{bid}.mlp.wo",                             # jina-bert
             "transformer.h.{bid}.mlp.fc_in",                          # gpt-j
             "language_model.encoder.layers.{bid}.mlp.dense_h_to_4h",  # persimmon
             "model.layers.{bid}.mlp.dense_h_to_4h",                   # persimmon
@@ -241,6 +238,7 @@ class TensorNameMap:
             "model.layers.layers.{bid}.mlp.gate_proj",    # plamo
             "model.layers.{bid}.feed_forward.w1",         # internlm2
             "encoder.layers.{bid}.mlp.fc12",              # nomic-bert
+            "encoder.layer.{bid}.mlp.gated_layers",       # jina-bert
         ),
 
         MODEL_TENSOR.FFN_GATE_EXP: (
@@ -258,6 +256,8 @@ class TensorNameMap:
             "model.layers.{bid}.mlp.down_proj",                       # llama-hf
             "layers.{bid}.feed_forward.w2",                           # llama-pth
             "encoder.layer.{bid}.output.dense",                       # bert
+            "encoder.layer.{bid}.mlp.wo",                             # jina-bert
+            "encoder.layer.{bid}.mlp.layernorm",                      # jina-bert
             "transformer.h.{bid}.mlp.fc_out",                         # gpt-j
             "language_model.encoder.layers.{bid}.mlp.dense_4h_to_h",  # persimmon
             "model.layers.{bid}.mlp.dense_4h_to_h",                   # persimmon

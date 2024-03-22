@@ -1757,6 +1757,7 @@ class JinaBertModel(BertModel):
     def get_tensors(self):
         assert self.vocab_size is not None
         for name, data in super().get_tensors():
+            print(f'get_tensors: {name} {data.shape}')
             # Nomic Embed's token embeddings tensor is padded, but llama.cpp wants tensor sizes to match exactly.
             if name == 'embeddings.word_embeddings.weight' and data.shape[1] != self.vocab_size:
                 rounded_vocab_size = (self.vocab_size + 63) // 64 * 64
